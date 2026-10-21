@@ -1,0 +1,74 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image, getImage } from "astro:assets";
+import "photoswipe/style.css";
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "../assets/images/*.{png,jpg,jpeg,webp,avif}",
+    { eager: true },
+);
+
+// Alt text for each screenshot, keyed by filename.
+const captions: Record<string, string> = {
+    "screenshot_1.png":
+        "The Songs view listing the music library in a table of title, time, artist, album, and genre, with an Apple Music extension in the sidebar showing recently played and recently added albums.",
+    "screenshot_2.png":
+        "The quick-open palette searching for “filters”, showing matching songs and albums from the library alongside results from Apple Music.",
+    "screenshot_3.png":
+        "The command palette searching for “songs”, offering library commands such as Download Selected Songs and Delete Selected Songs for the selected tracks of an album.",
+    "screenshot_4.png":
+        "An album page for Filters by Bayonne with one of its songs playing, its lyrics from a Genius extension shown in the sidebar, and playback controls along the bottom.",
+};
+
+const screenshots = await Promise.all(
+    Object.entries(images)
+        .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+        .map(async ([path, { default: src }], index) => {
+            const full = await getImage({
+                src,
+                width: Math.min(src.width, 2400),
+                format: "webp",
+            });
+            return {
+                src,
+                full,
+                alt:
+                    captions[path.split("/").pop()!] ??
+                    `Magritte screenshot ${index + 1}`,
+            };
+        }),
+);
+---
+
+<section class="w-full max-w-6xl mx-auto p-outside">
+    <h2 class="sr-only">Screenshots</h2>
+    <div id="screenshots" class="grid grid-cols-1 sm:grid-cols-2 gap-between">
+        {screenshots.map(({ src, full, alt }) => (
+            <a
+                href={full.src}
+                data-pswp-width={full.attributes.width}
+                data-pswp-height={full.attributes.height}
+                class="block overflow-hidden rounded-lg outline-outline-focus focus-visible:outline-2"
+            >
+                <Image
+                    src={src}
+                    alt={alt}
+                    widths={[600, 1200]}
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    class="w-full h-auto transition-transform hover:scale-105"
+                />
+            </a>
+        ))}
+    </div>
+</section>
+
+<script>
+    import PhotoSwipeLightbox from "photoswipe/lightbox";
+
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: "#screenshots",
+        children: "a",
+        pswpModule: () => import("photoswipe"),
+    });
+    lightbox.init();
+</script>
