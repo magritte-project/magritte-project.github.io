@@ -7,7 +7,7 @@ import icon from "../assets/icon.svg";
     <img src={icon.src} alt="Icon" class="aspect-square w-32" />
     <h1 class="text-2xl font-bold pt-4">Magritte</h1>
     <h2 class="text-sm pt-1">A personal music platform</h2>
-    <ol class="pt-2 flex items-center gap-between">
+    <div class="pt-2 flex items-center gap-between">
         <a
             href="https://github.com/magritte-project/magritte"
             class="text-key hover:bg-key hover:text-on-key active:bg-key-active disabled:opacity-disabled flex items-center gap-1 text-sm font-bold"
@@ -15,10 +15,24 @@ import icon from "../assets/icon.svg";
             <Icon name="ph:github-logo" desc="Logo" /> GitHub
         </a>
         <a
+            href="https://github.com/magritte-project/magritte/issues"
+            class="text-key hover:bg-key hover:text-on-key active:bg-key-active disabled:opacity-disabled flex items-center gap-1 text-sm font-bold"
+        >
+            <Icon name="ph:money-wavy" desc="Bug" /> Report a Bug
+        </a>
+        <a
             href="https://github.com/sponsors/decarbonization"
             class="text-key hover:bg-key hover:text-on-key active:bg-key-active disabled:opacity-disabled flex items-center gap-1 text-sm font-bold"
         >
             <Icon name="ph:money-wavy" desc="Money" /> Sponsor
         </a>
-    </ol>
+    </div>
+    <div class="pt-2">
+        <a
+            href="/getting-started/"
+            class="bg-key text-on-key active:bg-key-active active:text-on-key-active disabled:opacity-disabled flex items-center gap-2 text-sm font-bold p-2 rounded-md"
+        >
+            <Icon name="ph:book-open" desc="Book" /> Get Started
+        </a>
+    </div>
 </main>

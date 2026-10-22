@@ -11,7 +11,6 @@ export default defineConfig({
   site: 'https://magritte-project.github.io',
   integrations: [
     icon(),
-    // Docs live in src/content/docs/doc/ so they're served under /doc
     starlight({
       title: 'Magritte',
       logo: { src: './src/assets/icon.svg' },
@@ -25,7 +24,8 @@ export default defineConfig({
         { icon: 'github', label: 'GitHub', href: 'https://github.com/magritte-project/magritte' },
       ],
       sidebar: [
-        { label: 'Guides', items: [{ autogenerate: { directory: 'doc' } }] },
+        { label: 'Start Here', items: [{ autogenerate: { directory: 'getting-started' } }] },
+        { label: 'Resources', items: [{ autogenerate: { directory: 'resources' } }] },
       ],
       // Keep the site's own 404 handling rather than Starlight's
       disable404Route: true,
