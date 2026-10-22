@@ -1,0 +1,25 @@
+@import "fonts.css";
+
+/*
+ * Theme for the Starlight docs under /doc. Starlight doesn't load Tailwind, so
+ * the brand colors from global.css are repeated here; keep them in sync.
+ */
+
+/* The docs are dark-only; see components/starlight/ThemeProvider.astro */
+:root {
+    --sl-font: "Comfortaa", sans-serif;
+    --sl-font-mono: "Fira Mono", monospace;
+
+    --sl-color-accent-low: oklch(27.9% 0.1475 80.45); /* mg-orange-800 */
+    --sl-color-accent: oklch(86.9% 0.1475 80.45); /* mg-orange-300 */
+    --sl-color-accent-high: oklch(92.9% 0.1475 80.45); /* mg-orange-200 */
+
+    --sl-color-white: oklch(92.8% 0.006 264.531); /* gray-200 */
+    --sl-color-gray-1: oklch(87.2% 0.01 258.338); /* gray-300 */
+    --sl-color-gray-2: oklch(70.7% 0.022 261.325); /* gray-400 */
+    --sl-color-gray-3: oklch(55.1% 0.027 264.364); /* gray-500 */
+    --sl-color-gray-4: oklch(44.6% 0.0656 238.47); /* mg-midnight-600 */
+    --sl-color-gray-5: oklch(27.9% 0.0656 238.47); /* mg-midnight-800 */
+    --sl-color-gray-6: oklch(20.8% 0.0656 238.47); /* mg-midnight-900 */
+    --sl-color-black: oklch(12.9% 0.0656 238.47); /* mg-midnight-950 */
+}

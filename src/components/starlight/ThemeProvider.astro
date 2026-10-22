@@ -1,0 +1,8 @@
+---
+// Replaces Starlight's ThemeProvider so the docs are always dark, like the rest
+// of the site, regardless of system preference or a previously saved choice.
+---
+
+<script is:inline>
+	document.documentElement.dataset.theme = 'dark';
+</script>
