@@ -1,3 +1,6 @@
 allowBuilds:
   esbuild: true
   sharp: true
+
+# Match pnpm 11 (used in CI): only install versions published at least a day ago
+minimumReleaseAge: 1440
