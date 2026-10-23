@@ -1,0 +1,31 @@
+{
+    "$schema": "./web/node_modules/oxlint/configuration_schema.json",
+    "options": {
+        "typeAware": true
+    },
+    "plugins": ["import", "typescript", "unicorn", "react"],
+    "env": {
+        "browser": true,
+        "es2024": true
+    },
+    "rules": {
+        "no-else-return": "off",
+        "typescript/no-floating-promises": [
+            "warn",
+            {
+                "allowForKnownSafeCalls": [
+                    {
+                        "from": "package",
+                        "package": "@tanstack/router-core",
+                        "name": ["NavigateFn", "UseNavigateResult"]
+                    }
+                ]
+            }
+        ]
+    },
+    "ignorePatterns": [
+        "web/src/routeTree.gen.ts",
+        "web/src/api/openapi.d.ts",
+        "packages/api/src/openapi/**/*.gen.ts"
+    ]
+}

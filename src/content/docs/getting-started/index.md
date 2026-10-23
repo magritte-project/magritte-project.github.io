@@ -6,9 +6,11 @@ description: Instructions for how to get up and running with Magritte.
 Magritte is an application server designed to run on desktop-class machines, single-board computers,
 network-attached storage devices, and in the cloud.
 
-# Quick Start
+## Quick Start
 
-Magritte is currently in early development and must be run from its development environment. Before you get started, make sure you have [`git`](https://git-scm.com/) and [`asdf`](https://asdf-vm.com/) installed on your machine. Follow the instructions on those projects' pages to get set up.
+Magritte is currently in early development and must be run from its development environment. Before
+you get started, make sure you have [`git`](https://git-scm.com/) and [`asdf`](https://asdf-vm.com/)
+installed on your machine. Follow the instructions on those projects' pages to get set up.
 
 With `git` and `asdf` installed, clone the GitHub project on your machine:
 
@@ -16,7 +18,8 @@ With `git` and `asdf` installed, clone the GitHub project on your machine:
 $ git clone git@github.com:magritte-project/magritte.git
 ```
 
-You can then `cd` into `magritte/` use the included bootstrap script to set up a local development environment:
+You can then `cd` into `magritte/` use the included bootstrap script to set up a local development
+environment:
 
 ```sh
 $ ./bootstrap
