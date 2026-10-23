@@ -1,6 +1,30 @@
 ---
+import { Icon } from "astro-icon/components";
 ---
 
-<footer class="text-sm text-center p-4">
-    Copyright 2025-2026 Magritte Project Contributors. All rights reserved.
+<footer class="w-full flex flex-col items-center gap-2 text-center p-4">
+    <div class="pt-2 flex items-center gap-between">
+        <a
+            href="https://github.com/magritte-project/magritte"
+            class="text-key hover:bg-key hover:text-on-key active:bg-key-active disabled:opacity-disabled flex items-center gap-1 text-sm font-bold"
+        >
+            <Icon name="ph:github-logo" desc="Logo" /> GitHub
+        </a>
+        <a
+            href="https://github.com/magritte-project/magritte/issues"
+            class="text-key hover:bg-key hover:text-on-key active:bg-key-active disabled:opacity-disabled flex items-center gap-1 text-sm font-bold"
+        >
+            <Icon name="ph:money-wavy" desc="Bug" /> Report a Bug
+        </a>
+        <a
+            href="https://github.com/sponsors/decarbonization"
+            class="text-key hover:bg-key hover:text-on-key active:bg-key-active disabled:opacity-disabled flex items-center gap-1 text-sm font-bold"
+        >
+            <Icon name="ph:money-wavy" desc="Money" /> Sponsor
+        </a>
+    </div>
+
+    <p class="text-sm">
+        Copyright 2025-2026 Magritte Project Contributors. All rights reserved.
+    </p>
 </footer>

@@ -1,9 +1,30 @@
-<section class="w-full max-w-prose mx-auto p-outside text-center">
+---
+import { Icon } from "astro-icon/components";
+---
+
+<section class="w-full max-w-prose mx-auto p-6 flex flex-col gap-3">
+    <h2 class="text-3xl font-bold">Get ready to love your music again</h2>
+    <p>Magritte is your own personal streaming music service.</p>
     <p>
-        Install Magritte on your computer or home server and listen to your own
-        music collection from anywhere. Mix in streaming services through
-        extensions, give everyone in your household their own account and
-        libraries, and track your listening with built-in scrobbling, all
-        without giving up control of your data.
+        Install it on your computer or home server and listen to your own music
+        collection from anywhere. Mix in streaming services through extensions,
+        give everyone in your household their own account and libraries, and
+        track your listening with built-in scrobbling, all without giving up
+        control of your data.
     </p>
+    <div class="flex items-center gap-4">
+        <a
+            href="/getting-started/"
+            class="bg-key text-on-key active:bg-key-active active:text-on-key-active disabled:opacity-disabled flex items-center gap-2 font-bold px-4 py-2 rounded-full"
+        >
+            Get Started <Icon name="ph:caret-right" desc="right arrow" />
+        </a>
+        <a
+            href="https://github.com/magritte-project/"
+            target="_blank"
+            class="bg-secondary active:bg-secondary-active disabled:opacity-disabled flex items-center gap-2 font-bold px-4 py-2 rounded-full"
+        >
+            GitHub <Icon name="ph:arrow-square-out" desc="in new window" />
+        </a>
+    </div>
 </section>
