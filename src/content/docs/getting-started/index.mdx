@@ -4,6 +4,7 @@ description: Instructions for how to get up and running with Magritte.
 ---
 
 import { Tabs, TabItem } from "@astrojs/starlight/components"
+import PipInstall from "../../../components/starlight/PipInstall.astro"
 
 Magritte is an application server designed to run on desktop-class machines, single-board computers,
 network-attached storage devices, and in the cloud.
@@ -15,18 +16,7 @@ network-attached storage devices, and in the cloud.
     Magritte is distributed as a Python package on [PyPi](https://pypi.org/project/magritte-project/).
     You can use `pip` (or any other Python package manager) to install it:
 
-    <Tabs>
-      <TabItem label="Desktop">
-        ```sh
-        $ pip install magritte-project[desktop]
-        ```
-      </TabItem>
-      <TabItem label="Server">
-        ```sh
-        $ pip install magritte-project
-        ```
-      </TabItem>
-    </Tabs>
+    <PipInstall />
 
     Once you've installed Magritte, you can run it with a `python` command:
 

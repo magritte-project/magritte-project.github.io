@@ -1,0 +1,70 @@
+---
+import { Code } from "@astrojs/starlight/components";
+
+// `id` is the pip extra name; `label` is what the checkbox shows; `checked` sets the default
+const extras = [
+    { id: "desktop", label: "Desktop environment support", checked: true },
+    { id: "mailtrap", label: "Mailtrap email delivery", checked: false },
+];
+
+// Every combination of extra ids: [], [desktop], [mailtrap], [desktop, mailtrap]
+const combos = extras.reduce<string[][]>(
+    (acc, extra) => acc.flatMap((combo) => [combo, [...combo, extra.id]]),
+    [[]],
+);
+
+const command = (selected: string[]) =>
+    selected.length
+        ? `pip install "magritte[${selected.join(",")}]"`
+        : `pip install magritte`;
+---
+
+<div class="pip-install">
+    <fieldset>
+        <legend class="sr-only">Optional extras</legend>
+        {extras.map((extra) => (
+            <label>
+                <input
+                    type="checkbox"
+                    value={extra.id}
+                    checked={extra.checked}
+                />{" "}
+                {extra.label}
+            </label>
+        ))}
+    </fieldset>
+    {combos.map((combo) => (
+        <div
+            class="panel"
+            {...Object.fromEntries(
+                extras.map((e) => [
+                    `data-${e.id}`,
+                    String(combo.includes(e.id)),
+                ]),
+            )}
+        >
+            <Code code={command(combo)} lang="sh" />
+        </div>
+    ))}
+</div>
+
+<style>
+    fieldset {
+        display: flex;
+        gap: 1rem;
+        border: none;
+        padding: 0;
+    }
+
+    /* Hide any panel whose extras disagree with a checkbox's state */
+    .pip-install:has(input[value="desktop"]:checked)
+        .panel[data-desktop="false"],
+    .pip-install:has(input[value="desktop"]:not(:checked))
+        .panel[data-desktop="true"],
+    .pip-install:has(input[value="mailtrap"]:checked)
+        .panel[data-mailtrap="false"],
+    .pip-install:has(input[value="mailtrap"]:not(:checked))
+        .panel[data-mailtrap="true"] {
+        display: none;
+    }
+</style>
