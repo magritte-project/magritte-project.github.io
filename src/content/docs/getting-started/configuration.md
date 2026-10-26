@@ -9,7 +9,8 @@ extensive configuration.
 ## Environment Variables
 
 Magritte reads all configuration for how to store and retrieve user data, handle secrets, etc from
-the environment it runs in.
+the environment it runs in. You may also set environment variables from a `.env` file located in the
+working directory you start Magritte from.
 
 ### Storage
 
