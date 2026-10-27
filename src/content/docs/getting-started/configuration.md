@@ -3,76 +3,90 @@ title: Configuration
 description: How to configure a Magritte instance.
 ---
 
-Because Magritte is intended to be usable in a wide range deployment scenarios, it supports
-extensive configuration.
+Magritte is designed to run in a wide range of deployment scenarios, so most of its behavior is
+configurable.
 
-## Environment Variables
+## Configuring Magritte
 
-Magritte reads all configuration for how to store and retrieve user data, handle secrets, etc from
-the environment it runs in. You may also set environment variables from a `.env` file located in the
-working directory you start Magritte from.
+Magritte reads its configuration from three places, from lowest to highest priority:
 
-### Storage
+1. A `.env` file in your current working directory
+2. The environment you start it from
+3. An `env` file in Magritte's data directory
 
-By default, Magritte stores its data in a hidden folder in the user's home directory, searches for
-song files in a user's music folder, and uses an sqlite3 database. These things can be customized if
-you are running Magritte somewhere besides your computer.
+When a key is set in more than one place, the higher-priority source wins. Keys in the data
+directory's `env` file always take effect, even if the same key is set in the environment.
 
-| Key          | Description                                           | Type  | Default                                           |
-| ------------ | ----------------------------------------------------- | ----- | ------------------------------------------------- |
-| `DATA_HOME`  | Where the instance stores its data                    | `str` | `$HOME/.magritte`                                 |
-| `MUSIC_HOME` | Where the instance can find music files for libraries | `str` | `$HOME/Music`                                     |
-| `DB`         | The custom URL to connect to the database             | `str` | `sqlite+aiosqlite:////$HOME/.magritte/db.sqlite3` |
-
-### Uploads
-
-Magritte can be configured to support uploading new song files. This is disabled by default.
-
-| Key                    | Description                                                               | Type   | Default              |
-| ---------------------- | ------------------------------------------------------------------------- | ------ | -------------------- |
-| `ENABLE_UPLOADS`       | Whether music files can be uploaded to this instance                      | `bool` | `false`              |
-| `UPLOAD_MAX_FILE_SIZE` | The maximum size in bytes of a file that can be uploaded to this instance | `int`  | `1073741824` (1 GiB) |
-
-### Account Emails
-
-Magritte can be configured to associate email addresses with user accounts. This enables features
-such as lost password recovery and notifications.
-
-| Key                      | Description                                                             | Type  | Default   |
-| ------------------------ | ----------------------------------------------------------------------- | ----- | --------- |
-| `WEB_URL`                | The custom URL where this instance can be accessed on the web           | `str` | _Not set_ |
-| `EMAIL_SENDER_ADDRESS`   | The custom address emails from this instance come from                  | `str` | _Not set_ |
-| `EMAIL_SMTP`             | The URL of an SMTP server to send emails through, including credentials | `str` | _Not set_ |
-| `EMAIL_MAILTRAP_API_KEY` | The Mailtrap API key to use to send emails                              | `str` | _Not set_ |
-
-### Secrets
-
-Magritte uses random secret values to generate signed tokens to control access to user data.
-
-| Key                    | Description                                                           | Type  | Default   |
-| ---------------------- | --------------------------------------------------------------------- | ----- | --------- |
-| `TOKEN_ALGORITHM`      | The algorithm to use when generating tokens                           | `str` | `HS256`   |
-| `SESSION_TOKEN_SECRET` | The random secret to use when generating session tokens               | `str` | _Not set_ |
-| `FEATURE_TOKEN_SECRET` | The random secret to use when generating tokens for specific features | `str` | _Not set_ |
-| `SALT`                 | The random salt added to passwords before storing them in the DB      | `str` | _Not set_ |
-
-If you are running Magritte on a desktop-class machine, like in a development environment, it will
-default to generating and storing token secrets in your user's keyring (Keychain, KWallet, etc).
-
-If you need Magritte to load secrets from the environment instead of your keyring, it can generate
-secrets and salts for you:
+Configuration files use the format supported by
+[python-dotenv](https://saurabh-kumar.com/python-dotenv/#file-format), with one `KEY=value` pair per
+line:
 
 ```sh
-# From a development environment:
-$ ./admin generate-secrets
+ENV=prod
 ```
 
-Paste the result into your environment.
+### Supported Options
 
-### Other
+#### Storage
 
-If you are deploying a Magritte instance, make sure you set the appropriate `ENV` value.
+By default, Magritte stores its data in a hidden folder in your home directory, looks for music
+files in your Music folder, and uses a SQLite database. If you are running Magritte somewhere other
+than your own computer, you can change any of these.
 
-| Key   | Description                              | Type                | Default |
-| ----- | ---------------------------------------- | ------------------- | ------- |
-| `ENV` | The environment the server is running in | `dev`, `ci`, `prod` | `prod`  |
+| Key          | Description                                | Type  | Default                                          |
+| ------------ | ------------------------------------------ | ----- | ------------------------------------------------ |
+| `DATA_HOME`  | Directory where the instance stores data   | `str` | `$HOME/.magritte`                                |
+| `MUSIC_HOME` | Directory where libraries find music files | `str` | `$HOME/Music`                                    |
+| `DB`         | URL used to connect to the database        | `str` | `sqlite+aiosqlite:///$HOME/.magritte/db.sqlite3` |
+
+#### Uploads
+
+Magritte can let users upload new music files. Uploads are disabled by default.
+
+| Key                    | Description                                | Type   | Default              |
+| ---------------------- | ------------------------------------------ | ------ | -------------------- |
+| `ENABLE_UPLOADS`       | Whether users can upload music files       | `bool` | `false`              |
+| `UPLOAD_MAX_FILE_SIZE` | Maximum size of an uploaded file, in bytes | `int`  | `1073741824` (1 GiB) |
+
+#### Account Emails
+
+Magritte can associate email addresses with user accounts. This enables features such as password
+recovery and notifications.
+
+| Key                      | Description                                                    | Type  | Default   |
+| ------------------------ | -------------------------------------------------------------- | ----- | --------- |
+| `WEB_URL`                | Public URL of this instance, used for links in emails          | `str` | _Not set_ |
+| `EMAIL_SENDER_ADDRESS`   | Address that emails from this instance are sent from           | `str` | _Not set_ |
+| `EMAIL_SMTP`             | URL of an SMTP server to send emails through, with credentials | `str` | _Not set_ |
+| `EMAIL_MAILTRAP_API_KEY` | Mailtrap API key used to send emails                           | `str` | _Not set_ |
+
+#### Secrets
+
+Magritte uses random secret values to sign the tokens that control access to user data, and a random
+salt when storing passwords.
+
+| Key                    | Description                                        | Type  | Default   |
+| ---------------------- | -------------------------------------------------- | ----- | --------- |
+| `TOKEN_ALGORITHM`      | Algorithm used to sign tokens                      | `str` | `HS256`   |
+| `SESSION_TOKEN_SECRET` | Random secret used to sign session tokens          | `str` | _Not set_ |
+| `FEATURE_TOKEN_SECRET` | Random secret used to sign feature-specific tokens | `str` | _Not set_ |
+| `SALT`                 | Random salt added to passwords before storage      | `str` | _Not set_ |
+
+On a desktop-class machine, such as a development environment, Magritte generates these secrets
+automatically and stores them in your keyring (Keychain, KWallet, etc.).
+
+If you need Magritte to load secrets from the environment instead, it can generate them for you:
+
+```sh
+$ python -m magritte generate-secrets
+```
+
+Add the output to your environment or to one of the configuration files above.
+
+#### Other
+
+If you are deploying a Magritte instance, make sure `ENV` is set correctly.
+
+| Key   | Description                          | Type                | Default |
+| ----- | ------------------------------------ | ------------------- | ------- |
+| `ENV` | Environment the server is running in | `dev`, `ci`, `prod` | `prod`  |
