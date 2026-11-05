@@ -12,6 +12,51 @@ network-attached storage devices, and in the cloud.
 ## Quick Start
 
 <Tabs>
+  <TabItem label="Docker">
+    Magritte is available as a Docker image published to the [GitHub container registry](https://github.com/magritte-project/magritte/pkgs/container/magritte).
+    Use a docker compose file to customize the image to suit your use case:
+
+    ```yaml
+    services:
+      magritte:
+        image: ghcr.io/magritte-project/magritte:latest
+        container_name: magritte
+        restart: unless-stopped
+        ports:
+          - "8090:8090"
+        volumes:
+          # Database, generated secrets ($DATA_HOME/env), and other instance data
+          - /path/to/data:/data
+          # Your music library. Drop ":ro" if you enable uploads.
+          - /path/to/your/music:/music:ro
+        environment:
+          # Public URL of this instance; used in links and the email sender address.
+          WEB_URL: https://music.example.com
+    ```
+
+    The containerized version of Magritte stores its data at `/data` and looks
+    for music files at `/music`. Your docker compose file should specify volume
+    rules for both of these paths.
+
+    The first time containerized Magritte is started, it will generate token secrets
+    and salt and save them to a file in its data directory.
+
+    **Important:** By default, Magritte is started from its own user with UID/GID `1000`
+    inside the container. You may need to give access to your data / music directories
+    from the host system in order for Magritte to function. Alternatively, you can run
+    the container as your host user:
+
+    ```yaml
+    services:
+      magritte:
+        ...
+        user: "${UID:-1000}:${GID:-1000}"
+    ```
+
+    If your host does not set `$UID` or `$GID`, like Synology Container Manager, you will
+    need to acquire your UID and GID manually over SSH with the `id` command.
+
+  </TabItem>
   <TabItem label="Python">
     Magritte is distributed as a Python package on [PyPi](https://pypi.org/project/magritte-project/).
     You can use `pip` (or any other Python package manager) to install it:
@@ -21,7 +66,7 @@ network-attached storage devices, and in the cloud.
     Once you've installed Magritte, you can run it with a `python` command:
 
     ```sh
-    $ python -m magritte
+    $ magritte
     ```
 
     This starts the server on port 8090. After a few moments, you should be able to navigate to the Magritte in your browser:

@@ -8,6 +8,7 @@ Magritte is a server application which is published as a collection of packages.
 ## App
 
 - <https://pypi.org/project/magritte-project/>
+- <https://github.com/magritte-project/magritte/pkgs/container/magritte>
 
 ## Extension Support
 
