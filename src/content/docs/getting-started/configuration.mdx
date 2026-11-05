@@ -100,7 +100,10 @@ methods for sending emails:
     | Key                      | Description                           | Type  | Default   |
     | ------------------------ | ------------------------------------- | ----- | --------- |
     | `EMAIL_MAILTRAP_API_KEY` | Mailtrap API key used to send emails  | `str` | _Not set_ |
-    
+
+    **Important:** You must set `EMAIL_SENDER_ADDRESS` to an email address from the domain you've
+    verified with Mailtrap, otherwise sending will silently fail.
+
   </TabItem>
 </Tabs>
 
